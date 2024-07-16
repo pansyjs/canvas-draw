@@ -1,0 +1,45 @@
+{
+  "name": "@pansy/canvas-draw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "keywords": [],
+  "author": "",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "peerDependencies": {
+    "konva": "^9.0.0"
+  },
+  "dependencies": {
+    "@rcuse/shared": "^0.25.0",
+    "@types/geojson": "*",
+    "eventemitter3": "^4.0.7",
+    "lodash-es": "^4.17.21"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "import": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "require": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        }
+      },
+      "./package.json": "./package.json"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+# Dependencies
+node_modules
+
+# Generated files
+.docusaurus
+.cache-loader
+.cache
+.parcel-cache
+.nx
+dist
+es
+lib
+cjs
+esm
+
+.eslintcache
+
+# typescript
+*.tsbuildinfo
+
+# Misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+lerna-debug.log
+
+*storybook.log
+storybook-static
+
+.dumi/tmp
+.dumi/tmp-test
+.dumi/tmp-production
