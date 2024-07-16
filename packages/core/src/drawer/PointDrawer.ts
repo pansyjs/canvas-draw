@@ -1,6 +1,5 @@
 import Konva from 'konva'
 import { PointMode } from '../mode'
-import { PointRender } from '../render';
 import type {
   DeepPartial,
   BaseModeOptions,
@@ -43,5 +42,19 @@ export class PointDrawer extends PointMode<PointDrawerOptions> {
   bindThis() {
     super.bindThis();
     this.bindPointRenderEvent = this.bindPointRenderEvent.bind(this);
+  }
+
+  resetFeatures() {
+    this.setPointData((features) => {
+      return features.map((feature) => {
+        feature.properties = {
+          ...feature.properties,
+          isDrag: false,
+          isActive: false,
+          isHover: false,
+        };
+        return feature;
+      });
+    });
   }
 }

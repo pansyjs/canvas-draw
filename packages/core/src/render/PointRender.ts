@@ -1,7 +1,8 @@
 import Konva from 'konva'
+import { debounce } from 'lodash-es'
 import { isArray } from '@rcuse/shared'
 import { LayerRender } from './LayerRender';
-import { RenderEvent, LayerEvent } from '../constant';
+import { RenderEvent, LayerEvent, StageEvent } from '../constant';
 import {
   PointFeature,
   PointStyle,
@@ -48,6 +49,18 @@ export class PointRender extends LayerRender<PointFeature, PointStyle> {
     this.emit(RenderEvent.Click, e);
   };
 
+  onDragging = (e: any) => {
+    this.emit(RenderEvent.Dragging, e);
+  };
+
+  onDragEnd = debounce((e: any) => {
+    this.emit(RenderEvent.Dragend, e);
+  }, 0);
+
+  onMouseDown = (e: any) => {
+    this.emit(RenderEvent.Dragstart, e);
+  };
+
   disableCreate() {
     this.stage.off(LayerEvent.UnClick, this.onCreate);
   }
@@ -75,6 +88,21 @@ export class PointRender extends LayerRender<PointFeature, PointStyle> {
   disableHover() {
     this.stage.off(LayerEvent.Mousemove, this.onMouseMove);
     this.stage.off(LayerEvent.Mouseout, this.onMouseOut);
+  }
+
+  enableDrag() {
+    this.disableDrag();
+    this.layers[0].on(LayerEvent.Mousedown, this.onMouseDown);
+    this.stage.on(StageEvent.Dragging, this.onDragging);
+    this.stage.on(StageEvent.Mouseup, this.onDragEnd);
+    this.stage.on(StageEvent.Dragend, this.onDragEnd);
+  }
+
+  disableDrag() {
+    this.layers[0].off(LayerEvent.Mousedown, this.onMouseDown);
+    this.stage.off(StageEvent.Dragging, this.onDragging);
+    this.stage.off(StageEvent.Mouseup, this.onDragEnd);
+    this.stage.off(StageEvent.Dragend, this.onDragEnd);
   }
 
   setData(features: PointFeature[]) {

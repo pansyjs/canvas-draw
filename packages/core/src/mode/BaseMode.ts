@@ -196,6 +196,28 @@ export abstract class BaseMode<
   }
 
   /**
+   * 禁用Drawer
+   */
+  disable() {
+    this.resetFeatures();
+    this.enabled = false;
+    this.setCursor(null);
+    this.unbindEnableEvent();
+    this.addCount = 0;
+  }
+
+  /**
+   * 清空所有数据
+   */
+  clear(disable = false) {
+    this.source.clear();
+    this.emit(DrawEvent.Clear, this);
+    if (disable) {
+      this.disable();
+    }
+  }
+
+  /**
    * 获取当前是否为编辑态
    */
   isEnable() {
@@ -221,4 +243,7 @@ export abstract class BaseMode<
       this.stageRender.removeAllListeners(EventName);
     })
   }
+
+  // 清除当前正在绘制中的绘制物，同时将当前激活态的绘制物置为普通态
+  abstract resetFeatures(): void;
 }

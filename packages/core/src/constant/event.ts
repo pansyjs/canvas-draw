@@ -36,6 +36,10 @@ export enum RenderEvent {
 
 export enum StageEvent {
   Mousemove = 'mousemove',
+  Mouseup = 'mouseup',
+  Dragstart = 'dragstart',
+  Dragging = 'dragging',
+  Dragend = 'dragend',
 }
 
 export enum LayerEvent {
