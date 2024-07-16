@@ -22,13 +22,59 @@ export class PointRender extends LayerRender<PointFeature, PointStyle> {
     }
   };
 
+  onMouseMove = (e: any) => {
+    const type = e.target.getType();
+
+    if (type !== 'Stage') {
+      const layer = e.target.parent;
+      if (this.layers[0]?.id === layer.id) {
+        this.emit(RenderEvent.Mousemove, e);
+      }
+    }
+  };
+
+  onMouseOut = (e: any) => {
+    const type = e.target.getType();
+
+    if (type !== 'Stage') {
+      const layer = e.target.parent;
+      if (this.layers[0]?.id === layer.id) {
+        this.emit(RenderEvent.Mouseout, e);
+      }
+    }
+  };
+
+  onClick = (e: any) => {
+    this.emit(RenderEvent.Click, e);
+  };
+
   disableCreate() {
-    this.layers[0].off(LayerEvent.UnClick, this.onCreate);
+    this.stage.off(LayerEvent.UnClick, this.onCreate);
   }
 
   enableCreate() {
     this.disableCreate();
     this.stage.on(LayerEvent.Click, this.onCreate);
+  }
+
+  enableClick() {
+    this.disableClick();
+    this.layers[0].on(LayerEvent.Click, this.onClick);
+  }
+
+  disableClick() {
+    this.layers[0].off(LayerEvent.Click, this.onClick);
+  }
+
+  enableHover() {
+    this.disableHover();
+    this.stage.on(LayerEvent.Mousemove, this.onMouseMove);
+    this.stage.on(LayerEvent.Mouseout, this.onMouseOut);
+  }
+
+  disableHover() {
+    this.stage.off(LayerEvent.Mousemove, this.onMouseMove);
+    this.stage.off(LayerEvent.Mouseout, this.onMouseOut);
   }
 
   setData(features: PointFeature[]) {
@@ -55,6 +101,8 @@ export class PointRender extends LayerRender<PointFeature, PointStyle> {
             fill: style.color,
             ...this.style.style,
           });
+
+          Point.setAttr('feature', feature)
 
           layer.add(Point);
         }

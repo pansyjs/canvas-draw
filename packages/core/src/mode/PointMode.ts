@@ -48,6 +48,12 @@ export abstract class PointMode<
     if (this.enabled) {
       this.pointRender?.enableCreate();
     }
+
+    this.pointRender?.enableClick();
+
+    if (editable) {
+      this.pointRender?.enableHover();
+    }
   }
 
   /**
@@ -88,6 +94,16 @@ export abstract class PointMode<
     })
   }
 
+  handlePointHover(point: PointFeature) {
+    this.setCursor('pointHover');
+  }
+
+  handlePointUnHover(point: PointFeature) {
+    console.log(point)
+    this.resetCursor();
+  }
+
+
   bindEnableEvent() {
     super.bindEnableEvent();
     this.enablePointRenderAction();
@@ -95,9 +111,24 @@ export abstract class PointMode<
 
   bindPointRenderEvent() {
     this.pointRender?.on(RenderEvent.UnClick, this.onPointCreate.bind(this));
+    this.pointRender?.on(
+      RenderEvent.Mousemove,
+      this.onPointMouseMove.bind(this),
+    );
+    this.pointRender?.on(RenderEvent.Mouseout, this.onPointMouseOut.bind(this));
   }
-
+  /**
+   * 创建点回调
+   */
   onPointCreate(e: any) {
     return this.handleCreatePoint(transPositionToArray(getPosition(e)));
+  }
+
+  onPointMouseMove(e: any) {
+    return this.handlePointHover(e);
+  }
+
+  onPointMouseOut(e: any) {
+    return this.handlePointUnHover(e);
   }
 }
