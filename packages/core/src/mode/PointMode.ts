@@ -1,7 +1,7 @@
 import { BaseMode } from './BaseMode';
 import { PointRender } from '../render';
 import { RenderEvent } from '../constant';
-import { transPositionToArray, getPosition, createPointFeature, updateTargetFeature } from '../utils'
+import { transPositionToArray, getPosition, createPointFeature, updateTargetFeature, isSameFeature } from '../utils'
 import type { BaseModeOptions, PointFeature, PositionArray, FeatureUpdater } from '../types';
 
 export abstract class PointMode<
@@ -19,7 +19,7 @@ export abstract class PointMode<
    * 获取点数据
    */
   getPointData() {
-    return [];
+    return this.source.getRenderData<PointFeature>('point');
   }
 
   /**
@@ -27,8 +27,7 @@ export abstract class PointMode<
    * @protected
    */
   protected get dragPoint() {
-    return [];
-    // return this.getPointData().find((feature) => feature.properties.isDrag);
+    return this.getPointData().find((feature) => feature.properties.isDrag);
   }
 
   /**
@@ -36,10 +35,19 @@ export abstract class PointMode<
    * @protected
    */
   protected get editPoint() {
-    return [];
-    // return this.getPointData().find((feature) => {
-    //   return feature.properties.isActive;
-    // });
+    return this.getPointData().find((feature) => {
+      return feature.properties.isActive;
+    });
+  }
+
+  /**
+   * 当前悬停的结点
+   * @protected
+   */
+  protected get hoverPoint() {
+    return this.getPointData().find((feature) => {
+      return feature.properties.isHover;
+    });
   }
 
   enablePointRenderAction() {
@@ -96,11 +104,36 @@ export abstract class PointMode<
 
   handlePointHover(point: PointFeature) {
     this.setCursor('pointHover');
+
+    if (!isSameFeature(point, this.hoverPoint)) {
+      this.setPointData((features) => {
+        return updateTargetFeature<PointFeature>({
+          target: point,
+          data: features,
+          targetHandler: (item) => {
+            item.properties.isHover = true;
+          },
+          otherHandler: (item) => {
+            item.properties.isHover = false;
+          },
+        });
+      });
+    }
+
+    return point;
   }
 
   handlePointUnHover(point: PointFeature) {
-    console.log(point)
     this.resetCursor();
+
+    this.setPointData((features) =>
+      features.map((feature) => {
+        feature.properties.isHover = false;
+        return feature;
+      }),
+    );
+
+    return point;
   }
 
 
@@ -125,10 +158,14 @@ export abstract class PointMode<
   }
 
   onPointMouseMove(e: any) {
-    return this.handlePointHover(e);
+    const point = e.target.attrs.feature;
+
+    return this.handlePointHover(point);
   }
 
   onPointMouseOut(e: any) {
-    return this.handlePointUnHover(e);
+    const point = e.target.attrs.feature;
+
+    return this.handlePointUnHover(point);
   }
 }
