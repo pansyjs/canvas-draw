@@ -10,9 +10,7 @@ import {
 
 export class PointRender extends LayerRender<PointFeature, PointStyle> {
   initLayers(): Konva.Layer[] {
-    const layer = new Konva.Layer({
-      draggable: true
-    });
+    const layer = new Konva.Layer();
 
     return [layer];
   }
@@ -137,6 +135,33 @@ export class PointRender extends LayerRender<PointFeature, PointStyle> {
         if (!currntPoint) {
           currntPoint = new Konva.Circle({
             draggable: true,
+            dragBoundFunc: function(value) {
+              const position = { ...value };
+              const stage = this.getStage();
+
+              if (stage) {
+                const width = stage.width();
+                const height = stage.height()
+
+                if (position.x > width) {
+                  position.x = width
+                }
+
+                if (position.y > height) {
+                  position.y = height
+                }
+              }
+
+              if (position.x < 0) {
+                position.x = 0
+              }
+
+              if (position.y < 0) {
+                position.y = 0
+              }
+
+              return position;
+            }
           });
         }
 
