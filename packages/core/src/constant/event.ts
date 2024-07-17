@@ -38,7 +38,7 @@ export enum StageEvent {
   Mousemove = 'mousemove',
   Mouseup = 'mouseup',
   Dragstart = 'dragstart',
-  Dragging = 'dragging',
+  Dragging = 'dragmove',
   Dragend = 'dragend',
 }
 

@@ -2,7 +2,7 @@ import { BaseMode } from './BaseMode';
 import { PointRender } from '../render';
 import { RenderEvent } from '../constant';
 import { transPositionToArray, getPosition, createPointFeature, updateTargetFeature, isSameFeature } from '../utils'
-import type { BaseModeOptions, PointFeature, PositionArray, FeatureUpdater } from '../types';
+import type { BaseModeOptions, PointFeature, Position, PositionArray, FeatureUpdater } from '../types';
 
 export abstract class PointMode<
   T extends BaseModeOptions,
@@ -61,6 +61,7 @@ export abstract class PointMode<
 
     if (editable) {
       this.pointRender?.enableHover();
+      this.pointRender?.enableDrag();
     }
   }
 
@@ -136,6 +137,59 @@ export abstract class PointMode<
     return point;
   }
 
+  handlePointDragStart(point: PointFeature) {
+    this.setPointData((features) => {
+      return updateTargetFeature<PointFeature>({
+        target: point,
+        data: features,
+        targetHandler: (item) => {
+          item.properties = {
+            ...item.properties,
+            isDrag: true,
+            isActive: true,
+          };
+        },
+        otherHandler: (item) => {
+          item.properties = {
+            ...item.properties,
+            isDrag: false,
+            isActive: false,
+          };
+        },
+      });
+    });
+    this.setCursor('pointDrag');
+    return point;
+  }
+
+  handlePointDragging(point: PointFeature, position: Position) {
+    console.log(position)
+    // this.setPointData((features) => {
+    //   return updateTargetFeature<PointFeature>({
+    //     target: point,
+    //     data: features,
+    //     targetHandler: (item) => {
+    //       item.geometry.coordinates = transLngLat2Position(lngLat);
+    //     },
+    //   });
+    // });
+    // this.setCursor('pointDrag');
+    return point;
+  }
+
+  handlePointDragEnd(point: PointFeature) {
+    this.setPointData((features) => {
+      return updateTargetFeature<PointFeature>({
+        target: point,
+        data: features,
+        targetHandler: (item) => {
+          item.properties.isDrag = false;
+        },
+      });
+    });
+    this.setCursor('pointHover');
+    return point;
+  }
 
   bindEnableEvent() {
     super.bindEnableEvent();
@@ -149,12 +203,56 @@ export abstract class PointMode<
       this.onPointMouseMove.bind(this),
     );
     this.pointRender?.on(RenderEvent.Mouseout, this.onPointMouseOut.bind(this));
+
+    this.pointRender?.on(
+      RenderEvent.Dragstart,
+      this.onPointDragStart.bind(this),
+    );
+    this.pointRender?.on(RenderEvent.Dragging, this.onPointDragging.bind(this));
+    this.pointRender?.on(RenderEvent.Dragend, this.onPointDragEnd.bind(this));
   }
   /**
    * 创建点回调
    */
   onPointCreate(e: any) {
     return this.handleCreatePoint(transPositionToArray(getPosition(e)));
+  }
+
+  /**
+   * 开始拖拽点回调
+   * @param e
+   */
+  onPointDragStart(e: any) {
+    if (!this.options.editable) {
+      return;
+    }
+    const point = e.target.attrs.feature;
+
+    return this.handlePointDragStart(point);
+  }
+
+  /**
+   * 拖拽中点回调
+   * @param e
+   */
+  onPointDragging(e: any) {
+    const dragPoint = this.dragPoint;
+    if (!this.options.editable || !dragPoint) {
+      return;
+    }
+    return this.handlePointDragging(dragPoint, getPosition(e));
+  }
+
+  /**
+   * 拖拽结束点回调
+   * @param e
+   */
+  onPointDragEnd(e: any) {
+    const dragPoint = this.dragPoint;
+    if (!this.options.editable || !dragPoint) {
+      return;
+    }
+    return this.handlePointDragEnd(dragPoint);
   }
 
   onPointMouseMove(e: any) {
