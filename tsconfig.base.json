@@ -1,35 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "es2020",
     "jsx": "react",
-    "lib": ["DOM", "ES2020", "DOM.Iterable"],
-    "emitDecoratorMetadata": false,
-    "experimentalDecorators": false,
-    "baseUrl": ".",
-    "module": "ESNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
     "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "allowJs": false,
     "strict": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "alwaysStrict": true,
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitAny": true,
-    "noImplicitReturns": false,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": false,
+    "noImplicitAny": false,
     "declaration": true,
-    "importHelpers": true,
-    "sourceMap": true,
-    "stripInternal": true,
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "skipLibCheck": true,
-    "pretty": true
-  }
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "es",
+    "lib"
+  ]
 }
