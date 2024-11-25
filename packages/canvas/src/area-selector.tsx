@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AreaSelectorProProps } from './types';
 import { useCanvas } from './use-canvas';
 
-export const AreaSelectorPro: React.FC<AreaSelectorProProps> = (props) => {
+export const AreaSelectorPro = (props: AreaSelectorProProps) => {
   const { className, style, width, height, children } = props;
 
   const containerRef = React.useRef(null);

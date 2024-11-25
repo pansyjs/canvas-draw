@@ -1,5 +1,6 @@
 import { Point, Shape, ShapeStyle } from './shapes';
-import { Options } from './types';
+import type { Options } from './types';
+
 export class Pen {
   private canvas: HTMLCanvasElement;
   private _scaleX: number;

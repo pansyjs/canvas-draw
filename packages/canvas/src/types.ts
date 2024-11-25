@@ -47,4 +47,5 @@ export interface AreaSelectorProProps extends Options, SelectData, EditorOptions
   height: number;
   value?: IShapeData[];
   onChange?: (value?: IShapeData[]) => void;
+  children?: React.ReactNode;
 }
