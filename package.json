@@ -2,15 +2,15 @@
   "name": "root",
   "private": true,
   "packageManager": "pnpm@9.14.2",
+  "license": "ISC",
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  },
   "scripts": {
     "test": "vitest",
     "test:cov": "vitest run --coverage",
     "preinstall": "npx only-allow pnpm"
   },
-  "engines": {
-    "node": "^18.0.0 || >=20.0.0"
-  },
-  "license": "ISC",
   "devDependencies": {
     "@antfu/eslint-config": "^3.9.2",
     "@commitlint/cli": "^19.6.0",

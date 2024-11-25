@@ -2,11 +2,37 @@
   "name": "@pansy/darw-canvas-react",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "keywords": [],
+  "main": "src/index.ts",
+  "files": [
+    "dist",
+    "es",
+    "lib"
+  ],
+
+  "scripts": {
+    "build": "father build"
+  },
+  "peerDependencies": {
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "lib/index.js",
+    "module": "es/index.js",
+    "types": "es/index.d.ts"
+  }
 }

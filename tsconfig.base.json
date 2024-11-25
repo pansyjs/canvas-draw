@@ -9,7 +9,6 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "types": ["node"],
     "allowJs": false,
     "strict": true,
     "strictFunctionTypes": true,
