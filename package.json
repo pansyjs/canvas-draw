@@ -4,5 +4,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "ISC"
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.9.2",
+    "@eslint-react/eslint-plugin": "^1.17.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.7.2"
+  }
 }
