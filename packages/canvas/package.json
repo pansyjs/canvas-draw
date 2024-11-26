@@ -13,7 +13,7 @@
   ],
 
   "scripts": {
-    "build": "father build"
+    "build": "rollup --config"
   },
   "peerDependencies": {
     "@types/react": "*",
