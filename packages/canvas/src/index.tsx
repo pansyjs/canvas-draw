@@ -1,5 +1,5 @@
-import { AreaSelectorPro } from './area-selector';
+import { DarwCanvas } from './DarwCanvas';
 
-export type { AreaSelectorProProps } from './types';
-export { AreaSelectorPro };
-export default AreaSelectorPro;
+export type { DarwCanvasProps } from './types';
+export { DarwCanvas };
+export default DarwCanvas;

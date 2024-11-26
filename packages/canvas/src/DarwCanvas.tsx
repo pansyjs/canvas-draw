@@ -1,8 +1,8 @@
-import type { AreaSelectorProProps } from './types';
+import type { DarwCanvasProps } from './types';
 import * as React from 'react';
 import { useCanvas } from './use-canvas';
 
-export function AreaSelectorPro(props: AreaSelectorProProps) {
+export function DarwCanvas(props: DarwCanvasProps) {
   const { className, style, width, height, children } = props;
 
   const containerRef = React.useRef(null);
@@ -26,7 +26,7 @@ export function AreaSelectorPro(props: AreaSelectorProProps) {
   );
 }
 
-AreaSelectorPro.defaultProps = {
+DarwCanvas.defaultProps = {
   editableMaxSize: 1,
   minPoint: 3,
   maxPoint: 10,

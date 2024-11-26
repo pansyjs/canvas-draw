@@ -40,7 +40,7 @@ export interface Options {
 
 export type OperatorOptions = Required<Options> & SelectData & EditorOptions;
 
-export interface AreaSelectorProProps extends Options, SelectData, EditorOptions {
+export interface DarwCanvasProps extends Options, SelectData, EditorOptions {
   className?: string;
   style?: React.CSSProperties;
   width: number;
