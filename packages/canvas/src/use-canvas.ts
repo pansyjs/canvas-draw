@@ -1,4 +1,4 @@
-import type { AreaSelectorProProps } from './types';
+import type { DarwCanvasProps } from './types';
 import React from 'react';
 import { EditorProxy } from './editor-proxy';
 import { Operator, operatorsMap, Selecter } from './operator';
@@ -28,7 +28,7 @@ const defaultActiveShapeStyle = {
 
 // const operatorMap = { edit: RegularEditor, select: Selecter, default: Operator };
 
-export function useCanvas(props: AreaSelectorProProps) {
+export function useCanvas(props: DarwCanvasProps) {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const editor = props?.mode === 'edit';
   const shapeStyle = { ...(editor ? defaultShapeStyle : defaultShapeStyle2), ...props.shapeStyle };
@@ -96,6 +96,7 @@ export function useCanvas(props: AreaSelectorProProps) {
       operator.current?.destroy();
       proxy.current?.destroy();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, width, height, shape]);
 
   React.useEffect(() => {
