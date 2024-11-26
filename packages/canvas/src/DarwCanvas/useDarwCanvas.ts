@@ -1,4 +1,4 @@
-import type { DarwCanvasProps } from './types';
+import type { DarwCanvasProps } from '../types';
 import {
   EditorProxy,
   Operator,
@@ -32,7 +32,7 @@ const defaultActiveShapeStyle = {
 
 // const operatorMap = { edit: RegularEditor, select: Selecter, default: Operator };
 
-export function useCanvas(props: DarwCanvasProps) {
+export function useDarwCanvas(props: DarwCanvasProps) {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const editor = props?.mode === 'edit';
   const shapeStyle = { ...(editor ? defaultShapeStyle : defaultShapeStyle2), ...props.shapeStyle };

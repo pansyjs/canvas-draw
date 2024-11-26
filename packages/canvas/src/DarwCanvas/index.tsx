@@ -1,12 +1,12 @@
-import type { DarwCanvasProps } from './types';
+import type { DarwCanvasProps } from '../types';
 import * as React from 'react';
-import { useCanvas } from './use-canvas';
+import { useDarwCanvas } from './useDarwCanvas';
 
 export function DarwCanvas(props: DarwCanvasProps) {
   const { className, style, width, height, children } = props;
 
   const containerRef = React.useRef(null);
-  const { ref } = useCanvas(props);
+  const { ref } = useDarwCanvas(props);
 
   return (
     <div
