@@ -77,6 +77,9 @@ importers:
 
   packages/canvas:
     dependencies:
+      '@pansy/darw-core':
+        specifier: workspace:^
+        version: link:../core
       '@types/react':
         specifier: '*'
         version: 18.3.12

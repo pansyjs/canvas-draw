@@ -26,6 +26,9 @@
       "optional": true
     }
   },
+  "dependencies": {
+    "@pansy/darw-core": "workspace:^"
+  },
   "publishConfig": {
     "access": "public",
     "main": "dist/cjs/index.js",

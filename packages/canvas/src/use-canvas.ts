@@ -1,8 +1,12 @@
 import type { DarwCanvasProps } from './types';
+import {
+  EditorProxy,
+  Operator,
+  operatorsMap,
+  OperatorState,
+  Selecter,
+} from '@pansy/darw-core';
 import React from 'react';
-import { EditorProxy } from './editor-proxy';
-import { Operator, operatorsMap, Selecter } from './operator';
-import { OperatorState } from './operator/base';
 
 const defaultShapeStyle = {
   fillStyle: 'rgba(255, 77, 82, 0.15)',

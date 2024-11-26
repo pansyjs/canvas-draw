@@ -20,7 +20,9 @@ export function DarwCanvas(props: DarwCanvasProps) {
       }}
     >
       <canvas width={width} height={height} ref={ref} />
+      {/* eslint-disable-next-line react/no-children-map */}
       {React.Children.map(children, (child: any) =>
+        // eslint-disable-next-line react/no-clone-element
         React.cloneElement(child, { style: { position: 'absolute' } }))}
     </div>
   );

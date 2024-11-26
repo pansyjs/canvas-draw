@@ -1,5 +1,5 @@
-import type { Point, Shape, ShapeStyle } from './shapes';
-import type { Options } from './types';
+import type { Point, Shape } from './shapes';
+import type { Options, ShapeStyle } from './types';
 
 export class Pen {
   private canvas: HTMLCanvasElement;

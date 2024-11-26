@@ -1,4 +1,4 @@
-import type { Options } from '../types';
+import type { Options, ShapeStyle } from '../types';
 
 export interface IShapeData<T = any> {
   type: string;
@@ -8,13 +8,6 @@ export interface IShapeData<T = any> {
 export interface IShapeOptions extends Options {
   scaleX: number;
   scaleY: number;
-}
-
-export interface ShapeStyle {
-  fillStyle?: string;
-  strokeStyle?: string;
-  lineWidth?: number;
-  circleRadius?: number;
 }
 
 export interface IReactive<T> {

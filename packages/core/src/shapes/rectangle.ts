@@ -1,4 +1,5 @@
-import type { IShapeOptions, ShapeStyle } from './base';
+import type { ShapeStyle } from '../types';
+import type { IShapeOptions } from './base';
 import type { Rect } from './regular';
 import { Regular } from './regular';
 
