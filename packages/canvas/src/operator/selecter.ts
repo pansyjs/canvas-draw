@@ -1,13 +1,14 @@
-import { IShapeData, Shape } from '../shapes';
-import { OperatorOptions } from '../types';
-import { Operator, OperatorState } from './base';
+import type { IShapeData, Shape } from '../shapes';
+import type { OperatorOptions } from '../types';
+import type { OperatorState } from './base';
+import { Operator } from './base';
 
 export class Selecter extends Operator {
   constructor(
     canvas: HTMLCanvasElement,
     shapes: IShapeData[],
     state: OperatorState,
-    options: OperatorOptions
+    options: OperatorOptions,
   ) {
     super(canvas, shapes, state, options);
     if (this.options.mode === 'select') {
@@ -17,7 +18,7 @@ export class Selecter extends Operator {
     }
   }
 
-  private _handleMouseLeave = (e: MouseEvent) => {
+  private _handleMouseLeave = () => {
     this._drawShapes(this.shapes, this.activeShapeIndex);
   };
 
@@ -42,7 +43,7 @@ export class Selecter extends Operator {
         this.pen.drawShape(shape, this.options.shapeStyle);
       }
     });
-    //提升激活状态下的层级
+    // 提升激活状态下的层级
     if (shapes?.[activeIndex]) {
       this.pen.drawShape(shapes?.[activeIndex], this.options.activeShapeStyle);
     }
@@ -54,10 +55,12 @@ export class Selecter extends Operator {
       if (hits.length > 0) {
         if (this.activeShapeIndex === hits[0]) {
           this.select(-1);
-        } else {
+        }
+        else {
           this.select(hits[0]);
         }
-      } else {
+      }
+      else {
         // this._drawShapes(this.shapes, this.activeShapeIndex);
         this.select(this.activeShapeIndex);
       }
@@ -73,9 +76,10 @@ export class Selecter extends Operator {
         this.pen.drawTooltip(
           e.layerX,
           e.layerY,
-          hits[0] === this.activeShapeIndex ? '单击面取消选中' : '单击面可选中'
+          hits[0] === this.activeShapeIndex ? '单击面取消选中' : '单击面可选中',
         );
-      } else {
+      }
+      else {
         this.canvas.style.cursor = 'default';
         this._drawShapes(this.shapes, this.activeShapeIndex);
       }

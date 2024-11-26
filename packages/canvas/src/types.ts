@@ -1,4 +1,4 @@
-import { IShapeData } from './shapes/base';
+import type { IShapeData } from './shapes/base';
 
 export interface ShapeStyle {
   fillStyle?: string;

@@ -1,5 +1,6 @@
-import { IShapeOptions, ShapeStyle } from './base';
-import { Rect, Regular } from './regular';
+import type { IShapeOptions, ShapeStyle } from './base';
+import type { Rect } from './regular';
+import { Regular } from './regular';
 
 export class Rectangle extends Regular {
   public static create(rect: Rect, ctx: CanvasRenderingContext2D, options: IShapeOptions) {
@@ -7,11 +8,11 @@ export class Rectangle extends Regular {
       {
         type: 'rectangle',
         data: {
-          rect
-        }
+          rect,
+        },
       },
       ctx,
-      options
+      options,
     );
   }
 
@@ -31,35 +32,36 @@ export class Rectangle extends Regular {
       ctx.restore();
     }
   }
+
   drawActive(activeKeyPoint?: number, lineDash?: boolean): void {
     const ctx = this.ctx;
     const rect = this?.data?.rect;
     if (ctx && rect) {
       this.draw(this.options.activeShapeStyle, lineDash);
-      //画关键点
+      // 画关键点
       ctx.save();
-      //计算关键点
+      // 计算关键点
       const points = [
         { x: rect.x, y: rect.y },
         { x: rect.x + rect.width, y: rect.y },
         { x: rect.x + rect.width, y: rect.y + rect.height },
-        { x: rect.x, y: rect.y + rect.height }
+        { x: rect.x, y: rect.y + rect.height },
       ];
       if (points?.length > 0) {
         points.forEach((p, idx) => {
-          const r =
-            idx === activeKeyPoint
+          const r
+            = idx === activeKeyPoint
               ? this.options.activeShapeStyle?.circleRadius! + 2
               : this.options.activeShapeStyle?.circleRadius!;
           ctx.fillStyle = this.options.activeShapeStyle?.strokeStyle!;
           ctx.strokeStyle = '#FFF';
           ctx.lineWidth = 1;
           ctx.setLineDash([]);
-          //画圆
+          // 画圆
           ctx.beginPath();
           ctx.arc(p.x, p.y, r, 0, 2 * Math.PI, true);
           ctx.fill();
-          //画边框
+          // 画边框
           ctx.beginPath();
           ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
           ctx.stroke();
@@ -68,6 +70,7 @@ export class Rectangle extends Regular {
       ctx.restore();
     }
   }
+
   drawWip(): void {
     // throw new Error('Method not implemented.');
     this.drawActive(-1, true);

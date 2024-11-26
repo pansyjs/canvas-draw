@@ -1,6 +1,7 @@
-import { IShapeOptions, ShapeStyle } from './base';
-import { Point } from './polygon';
-import { Rect, Regular } from './regular';
+import type { IShapeOptions, ShapeStyle } from './base';
+import type { Point } from './polygon';
+import type { Rect } from './regular';
+import { Regular } from './regular';
 
 export class Circle extends Regular {
   public static create(rect: Rect, ctx: CanvasRenderingContext2D, options: IShapeOptions) {
@@ -8,11 +9,11 @@ export class Circle extends Regular {
       {
         type: 'circle',
         data: {
-          rect
-        }
+          rect,
+        },
       },
       ctx,
-      options
+      options,
     );
   }
 
@@ -21,11 +22,11 @@ export class Circle extends Regular {
     return [
       {
         x: rect?.x + rect?.width * 0.5,
-        y: rect?.y
+        y: rect?.y,
       },
       { x: rect?.x + rect?.width, y: rect?.y + rect?.height * 0.5 },
       { x: rect?.x + rect?.width * 0.5, y: rect?.y + rect?.height },
-      { x: rect?.x, y: rect?.y + rect?.height * 0.5 }
+      { x: rect?.x, y: rect?.y + rect?.height * 0.5 },
     ];
   }
 
@@ -42,7 +43,7 @@ export class Circle extends Regular {
     const ctx = this.ctx;
     const rect = this?.data?.rect;
     if (ctx && rect) {
-      //计算中心点和半径
+      // 计算中心点和半径
       const { center, radiusX, radiusY } = this._getCenterAndRadius();
       ctx.save();
       ctx.fillStyle = style?.fillStyle!;
@@ -56,29 +57,30 @@ export class Circle extends Regular {
       ctx.restore();
     }
   }
+
   drawActive(activeKeyPoint?: number, lineDash?: boolean): void {
     const ctx = this.ctx;
     const rect = this?.data?.rect;
     if (ctx && rect) {
       this.draw(this.options.activeShapeStyle, lineDash);
-      //画关键点
+      // 画关键点
       ctx.save();
-      //计算关键点
+      // 计算关键点
       const points = this._getKeyPoints();
       if (points?.length > 0) {
         points.forEach((p, idx) => {
-          const r =
-            idx === activeKeyPoint
+          const r
+            = idx === activeKeyPoint
               ? this.options.activeShapeStyle?.circleRadius! + 2
               : this.options.activeShapeStyle?.circleRadius!;
           ctx.fillStyle = this.options.activeShapeStyle?.strokeStyle!;
           ctx.strokeStyle = '#FFF';
           ctx.lineWidth = 1;
-          //画圆
+          // 画圆
           ctx.beginPath();
           ctx.arc(p.x, p.y, r, 0, 2 * Math.PI, true);
           ctx.fill();
-          //画边框
+          // 画边框
           ctx.beginPath();
           ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
           ctx.stroke();
@@ -87,6 +89,7 @@ export class Circle extends Regular {
       ctx.restore();
     }
   }
+
   drawWip(): void {
     // throw new Error('Method not implemented.');
     this.drawActive(-1, true);

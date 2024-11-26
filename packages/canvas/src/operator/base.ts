@@ -1,7 +1,8 @@
+import type { IShapeData, Shape } from '../shapes';
+import type { OperatorOptions } from '../types';
 import { Measurer } from '../measurer';
 import { Pen } from '../pen';
-import { IShapeData, Shape, ShapeFactory } from '../shapes';
-import { OperatorOptions } from '../types';
+import { ShapeFactory } from '../shapes';
 
 type ListenerType = (shapes: IShapeData[]) => void;
 
@@ -33,7 +34,7 @@ class Listener {
   }
 
   protected _dispatch = (shapes: Shape[]) =>
-    this.listeners.forEach((listener) => listener(shapes?.map((shape) => shape.toJson()) ?? []));
+    this.listeners.forEach(listener => listener(shapes?.map(shape => shape.toJson()) ?? []));
 }
 
 interface IOperator {
@@ -92,7 +93,7 @@ export class Operator<T extends Shape = Shape> extends Listener implements IOper
     this.operatorState.activeShapeIndex = index;
   }
 
-  //默认不创建editorProxy实例，因为只有在编辑模式下才需要
+  // 默认不创建editorProxy实例，因为只有在编辑模式下才需要
   attach() {
     return this;
   }
@@ -101,7 +102,7 @@ export class Operator<T extends Shape = Shape> extends Listener implements IOper
     canvas: HTMLCanvasElement,
     shapes: IShapeData[],
     state: OperatorState,
-    options: OperatorOptions
+    options: OperatorOptions,
   ) {
     super();
     this._canvas = canvas;
@@ -111,9 +112,9 @@ export class Operator<T extends Shape = Shape> extends Listener implements IOper
     this._measurer = new Measurer(this._pen, options);
     this.operatorState = state;
     // this._shapes = this.createShapes(shapes)?.map((s) => s.transform() as T);
-    this.operatorState.shapes = this.createShapes(shapes)?.map((s) => s.transform() as T);
+    this.operatorState.shapes = this.createShapes(shapes)?.map(s => s.transform() as T);
     if (this.shapes?.length > 0) {
-      //立即绘制
+      // 立即绘制
       this.pen.draw(this.shapes, this.activeShapeIndex);
     }
     canvas.oncontextmenu = (e) => {
@@ -132,16 +133,17 @@ export class Operator<T extends Shape = Shape> extends Listener implements IOper
   protected _createControlledListener = <T = MouseEvent>(l: (e: T) => void) => {
     return (e: T) => {
       const isEditorMode = this.options.mode === 'edit';
-      //如果是子操作，则判断当前选中的图形是否是子操作类型
+      // 如果是子操作，则判断当前选中的图形是否是子操作类型
       let isOperatorEnable = false;
       if (this.options?.subOperator) {
         if (this?.shapes?.[this.activeShapeIndex]?.type === this.options?.shape) {
           isOperatorEnable = true;
         }
-      } else {
+      }
+      else {
         if (
-          !this?.shapes?.[this.activeShapeIndex] ||
-          this?.shapes?.[this.activeShapeIndex]?.type === this.options?.shape
+          !this?.shapes?.[this.activeShapeIndex]
+          || this?.shapes?.[this.activeShapeIndex]?.type === this.options?.shape
         ) {
           isOperatorEnable = true;
         }
@@ -156,7 +158,7 @@ export class Operator<T extends Shape = Shape> extends Listener implements IOper
     return ShapeFactory.createShapes(shapes, this.pen.ctx, {
       ...this.options,
       scaleX: this.pen.scaleX,
-      scaleY: this.pen.scaleY
+      scaleY: this.pen.scaleY,
     }) as T[];
   }
 
@@ -168,7 +170,7 @@ export class Operator<T extends Shape = Shape> extends Listener implements IOper
 
   updateShapes(shapes: IShapeData[]) {
     // this._shapes = this.createShapes(shapes)?.map((s) => s.transform() as T);
-    this.operatorState.shapes = this.createShapes(shapes)?.map((s) => s.transform() as T);
+    this.operatorState.shapes = this.createShapes(shapes)?.map(s => s.transform() as T);
     this.pen.draw(this.shapes, this.activeShapeIndex);
   }
 

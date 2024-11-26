@@ -1,4 +1,4 @@
-import { IShapeData, IShapeOptions, Shape } from './base';
+import type { IShapeData, IShapeOptions, Shape } from './base';
 import { Circle } from './circle';
 import { Polygon } from './polygon';
 import { Rectangle } from './rectangle';
@@ -7,7 +7,7 @@ export class ShapeFactory {
   public static createShape<T>(
     data: IShapeData,
     ctx: CanvasRenderingContext2D,
-    options: IShapeOptions
+    options: IShapeOptions,
   ): T {
     switch (data.type) {
       case 'polygon':
@@ -24,8 +24,8 @@ export class ShapeFactory {
   public static createShapes<T extends Shape>(
     data: IShapeData[],
     ctx: CanvasRenderingContext2D,
-    options: IShapeOptions
+    options: IShapeOptions,
   ): T[] {
-    return data.map((d) => ShapeFactory.createShape(d, ctx, options)) as T[];
+    return data.map(d => ShapeFactory.createShape(d, ctx, options)) as T[];
   }
 }

@@ -1,4 +1,5 @@
-import { IShapeData, IShapeOptions, ReactiveShape, ShapeStyle } from './base';
+import type { IShapeData, IShapeOptions, ShapeStyle } from './base';
+import { ReactiveShape } from './base';
 
 export interface Point {
   x: number;
@@ -13,10 +14,10 @@ export class Polygon extends ReactiveShape<PolygonData> {
   constructor(
     data: IShapeData<PolygonData>,
     ctx: CanvasRenderingContext2D,
-    options: IShapeOptions
+    options: IShapeOptions,
   ) {
-    //兼容老数据
-    let fixData = data;
+    // 兼容老数据
+    const fixData = data;
     if (!data?.type) {
       fixData.type = 'polygon';
       fixData.data = data as unknown as PolygonData;
@@ -29,11 +30,11 @@ export class Polygon extends ReactiveShape<PolygonData> {
       {
         type: 'polygon',
         data: {
-          points
-        }
+          points,
+        },
       },
       ctx,
-      options
+      options,
     );
   }
 
@@ -62,42 +63,43 @@ export class Polygon extends ReactiveShape<PolygonData> {
       ctx.restore();
     }
   }
+
   drawActive(activeKeyPoint: number = -1) {
     const ctx = this.ctx;
     if (ctx) {
       this.draw(this.options.activeShapeStyle);
-      //画关键点
+      // 画关键点
       ctx.save();
       if (this.data?.points?.length > 0) {
         this.data?.points.forEach((p, idx) => {
-          const r =
-            idx === activeKeyPoint
+          const r
+            = idx === activeKeyPoint
               ? this.options.activeShapeStyle?.circleRadius! + 2
               : this.options.activeShapeStyle?.circleRadius!;
           ctx.fillStyle = this.options.activeShapeStyle?.strokeStyle!;
           ctx.strokeStyle = '#FFF';
           ctx.lineWidth = 1;
           ctx.setLineDash([]);
-          //画圆
+          // 画圆
           ctx.beginPath();
           ctx.arc(p.x, p.y, r, 0, 2 * Math.PI, true);
           ctx.fill();
-          //画边框
+          // 画边框
           ctx.beginPath();
           ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
           ctx.stroke();
         });
       }
-      //画中间点
+      // 画中间点
       if (this.data?.points?.length > 1) {
         this.data?.points.forEach((p, idx) => {
           const nextPoint = this.data?.points?.[(idx + 1) % this.data.points.length];
           const center = {
             x: (p.x + nextPoint.x) / 2,
-            y: (p.y + nextPoint.y) / 2
+            y: (p.y + nextPoint.y) / 2,
           };
           const r = this.options.shapeStyle?.circleRadius!;
-          //画圆
+          // 画圆
           ctx.beginPath();
           ctx.arc(center.x, center.y, r - 1, 0, 2 * Math.PI, true);
           ctx.fill();
@@ -115,7 +117,7 @@ export class Polygon extends ReactiveShape<PolygonData> {
       ctx.lineWidth = this.options?.activeShapeStyle?.lineWidth!;
       ctx.strokeStyle = this.options?.activeShapeStyle?.strokeStyle!;
       const points = this.data.points;
-      //画实线, 只有3个点以上才会出现实线
+      // 画实线, 只有3个点以上才会出现实线
       if (points.length > 2) {
         ctx.beginPath();
         ctx.setLineDash([]);
@@ -128,7 +130,7 @@ export class Polygon extends ReactiveShape<PolygonData> {
         ctx.stroke();
         ctx.fill();
       }
-      //画虚线
+      // 画虚线
       if (points.length > 1) {
         ctx.beginPath();
         ctx.setLineDash([4, 4]);
@@ -143,7 +145,7 @@ export class Polygon extends ReactiveShape<PolygonData> {
         ctx.stroke();
       }
       ctx.restore();
-      //画圆圈
+      // 画圆圈
       ctx.save();
       if (points?.length > 0) {
         const activePointIndex = points.length > 1 ? points.length - 2 : 0;
@@ -154,11 +156,11 @@ export class Polygon extends ReactiveShape<PolygonData> {
           ctx.strokeStyle = '#FFF';
           ctx.lineWidth = 1;
           ctx.setLineDash([]);
-          //画圆
+          // 画圆
           ctx.beginPath();
           ctx.arc(p.x, p.y, r, 0, 2 * Math.PI, true);
           ctx.fill();
-          //画边框
+          // 画边框
           ctx.beginPath();
           ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
           ctx.stroke();
@@ -170,19 +172,20 @@ export class Polygon extends ReactiveShape<PolygonData> {
 
   transform() {
     this._data = {
-      points: this.data?.points?.map((p) => ({
+      points: this.data?.points?.map(p => ({
         x: p.x / this.options.scaleX,
-        y: p.y / this.options.scaleY
-      }))
+        y: p.y / this.options.scaleY,
+      })),
     };
     return this;
   }
+
   recover() {
     return {
-      points: this.data?.points?.map((p) => ({
-        x: parseInt(String(p.x * this.options.scaleX), 10),
-        y: parseInt(String(p.y * this.options.scaleY), 10)
-      }))
+      points: this.data?.points?.map(p => ({
+        x: Number.parseInt(String(p.x * this.options.scaleX), 10),
+        y: Number.parseInt(String(p.y * this.options.scaleY), 10),
+      })),
     };
   }
 }

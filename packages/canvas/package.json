@@ -1,15 +1,12 @@
 {
   "name": "@pansy/darw-canvas-react",
   "version": "1.0.0",
-  "description": "",
-  "author": "",
+  "description": "Canvas 绘制组件",
   "license": "ISC",
   "keywords": [],
   "main": "src/index.ts",
   "files": [
-    "dist",
-    "es",
-    "lib"
+    "dist"
   ],
 
   "scripts": {
@@ -31,8 +28,8 @@
   },
   "publishConfig": {
     "access": "public",
-    "main": "lib/index.js",
-    "module": "es/index.js",
-    "types": "es/index.d.ts"
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.mjs",
+    "types": "dist/esm/index.d.ts"
   }
 }

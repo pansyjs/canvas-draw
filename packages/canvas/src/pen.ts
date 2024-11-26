@@ -1,4 +1,4 @@
-import { Point, Shape, ShapeStyle } from './shapes';
+import type { Point, Shape, ShapeStyle } from './shapes';
 import type { Options } from './types';
 
 export class Pen {
@@ -14,18 +14,23 @@ export class Pen {
   get ctx() {
     return this.canvas.getContext('2d')!;
   }
+
   get width() {
     return this._width;
   }
+
   set width(value: number) {
     this._width = value;
   }
+
   get height() {
     return this._height;
   }
+
   set height(value: number) {
     this._height = value;
   }
+
   get scaleX() {
     return this._scaleX;
   }
@@ -47,13 +52,13 @@ export class Pen {
     this.canvasWidth = cssWidth;
     this.canvasHeight = cssHeight;
     if (ctx) {
-      this.canvas.style.width = width + 'px';
-      this.canvas.style.height = height + 'px';
+      this.canvas.style.width = `${width}px`;
+      this.canvas.style.height = `${height}px`;
       this.canvas.width = this.dpr * cssWidth;
       this.canvas.height = this.dpr * cssHeight;
-      ctx.fillStyle = shapeStyle?.fillStyle!;
-      ctx.lineWidth = shapeStyle?.lineWidth!;
-      ctx.strokeStyle = shapeStyle?.strokeStyle!;
+      shapeStyle?.fillStyle && (ctx.fillStyle = shapeStyle.fillStyle);
+      shapeStyle?.lineWidth && (ctx.lineWidth = shapeStyle.lineWidth);
+      shapeStyle?.strokeStyle && (ctx.strokeStyle = shapeStyle.strokeStyle);
       ctx.scale(this.dpr, this.dpr);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
@@ -66,7 +71,7 @@ export class Pen {
         shape.draw();
       }
     });
-    //提升激活状态下的层级
+    // 提升激活状态下的层级
     if (shapes?.[activeIndex]) {
       // this.drawActiveShape(shapes[activeIndex], activeKeyPoint);
       shapes[activeIndex].drawActive(activeKeyPoint);
@@ -80,7 +85,7 @@ export class Pen {
   public physicalToCanvas = (p: Point) => {
     return {
       x: p.x * this.dpr,
-      y: p.y * this.dpr
+      y: p.y * this.dpr,
     };
   };
 
@@ -96,7 +101,7 @@ export class Pen {
     }
   };
 
-  //这个和draw的区别是，这个方法是专门用来绘制选中状态的图形，不会绘制正在绘制的图形
+  // 这个和draw的区别是，这个方法是专门用来绘制选中状态的图形，不会绘制正在绘制的图形
   public drawActive = (shapes: Shape[], activeIndex: number, activeKeyPoint: number = -1) => {
     const ctx = this.ctx;
     if (ctx) {
@@ -109,27 +114,27 @@ export class Pen {
     const cxt = this.ctx;
     if (cxt) {
       cxt.beginPath();
-      //从右下角顺时针绘制，弧度从0到1/2PI
+      // 从右下角顺时针绘制，弧度从0到1/2PI
       cxt.arc(width - radius, height - radius, radius, 0, Math.PI / 2);
-      //矩形下边线
+      // 矩形下边线
       cxt.lineTo(radius, height);
-      //左下角圆弧，弧度从1/2PI到PI
+      // 左下角圆弧，弧度从1/2PI到PI
       cxt.arc(radius, height - radius, radius, Math.PI / 2, Math.PI);
-      //矩形左边线
+      // 矩形左边线
       cxt.lineTo(0, radius);
-      //左上角圆弧，弧度从PI到3/2PI
+      // 左上角圆弧，弧度从PI到3/2PI
       cxt.arc(radius, radius, radius, Math.PI, (Math.PI * 3) / 2);
-      //上边线
+      // 上边线
       cxt.lineTo(width - radius, 0);
-      //右上角圆弧
+      // 右上角圆弧
       cxt.arc(width - radius, radius, radius, (Math.PI * 3) / 2, Math.PI * 2);
-      //右边线
+      // 右边线
       cxt.lineTo(width, height - radius);
       cxt.closePath();
     }
   };
 
-  //需要确保tooltip出现在能看见的位置
+  // 需要确保tooltip出现在能看见的位置
   public drawTooltip = (x: number, y: number, hintText: string) => {
     const ctx = this.ctx;
     if (ctx) {
@@ -137,10 +142,10 @@ export class Pen {
       ctx.font = '12px';
       ctx.textBaseline = 'top';
       ctx.fillStyle = '#0D1014';
-      //绘制ToolTip背景
+      // 绘制ToolTip背景
       const width = ctx.measureText(hintText).width + 16;
       const height = 24;
-      //让tooltip向下偏移12像素，防止被遮挡
+      // 让tooltip向下偏移12像素，防止被遮挡
       const dx = x + 6;
       const dy = y + 16;
       let rx = dx;
@@ -155,12 +160,12 @@ export class Pen {
 
       ctx.save();
       ctx.translate(rx, ry);
-      //绘制圆角矩形的各个边
+      // 绘制圆角矩形的各个边
       this._drawRoundRectPath(width, height, 4);
-      ctx.fillStyle = 'rgba(10, 27, 57, 0.8)'; //若是给定了值就用给定的值否则给予默认值
+      ctx.fillStyle = 'rgba(10, 27, 57, 0.8)'; // 若是给定了值就用给定的值否则给予默认值
       ctx.fill();
       ctx.restore();
-      //绘制ToolTip文字
+      // 绘制ToolTip文字
       ctx.fillStyle = '#fff';
       ctx.fillText(hintText, rx + 8, ry + 7);
       ctx.restore();

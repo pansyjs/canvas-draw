@@ -1,40 +1,40 @@
+import type { AreaSelectorProProps } from './types';
 import React from 'react';
 import { EditorProxy } from './editor-proxy';
 import { Operator, operatorsMap, Selecter } from './operator';
 import { OperatorState } from './operator/base';
-import { AreaSelectorProProps } from './types';
 
 const defaultShapeStyle = {
   fillStyle: 'rgba(255, 77, 82, 0.15)',
   strokeStyle: '#FF4D52',
   lineWidth: 2,
-  circleRadius: 5
+  circleRadius: 5,
 };
 
-//编辑态默认样式
+// 编辑态默认样式
 const defaultShapeStyle2 = {
   fillStyle: 'rgba(255, 255, 255, 0.15)',
   strokeStyle: '#FFFFFF',
   lineWidth: 2,
-  circleRadius: 5
+  circleRadius: 5,
 };
 
 const defaultActiveShapeStyle = {
   fillStyle: 'rgba(255, 161, 46, 0.15)',
   strokeStyle: '#FFA12E',
   lineWidth: 2,
-  circleRadius: 5
+  circleRadius: 5,
 };
 
 // const operatorMap = { edit: RegularEditor, select: Selecter, default: Operator };
 
-export const useCanvas = (props: AreaSelectorProProps) => {
+export function useCanvas(props: AreaSelectorProProps) {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const editor = props?.mode === 'edit';
   const shapeStyle = { ...(editor ? defaultShapeStyle : defaultShapeStyle2), ...props.shapeStyle };
   const activeShapeStyle = {
     ...(editor ? defaultActiveShapeStyle : defaultShapeStyle),
-    ...props.activeShapeStyle
+    ...props.activeShapeStyle,
   };
   const axis = props.axis!;
   const {
@@ -48,21 +48,23 @@ export const useCanvas = (props: AreaSelectorProProps) => {
     selectedIndex = -1,
     onSelect,
     mode,
-    shape = 'polygon'
+    shape = 'polygon',
   } = props;
   const operator = React.useRef<Operator>();
   const proxy = React.useRef<EditorProxy>();
   React.useEffect(() => {
     if (ref.current) {
       const canvas = ref.current;
-      //初始化画布
+      // 初始化画布
       // const Op = operatorMap[mode!];
       function getOption() {
         if (mode === 'default') {
           return Operator;
-        } else if (mode === 'select') {
+        }
+        else if (mode === 'select') {
           return Selecter;
-        } else if (mode === 'edit') {
+        }
+        else if (mode === 'edit') {
           return operatorsMap[shape];
         }
         return null;
@@ -82,7 +84,7 @@ export const useCanvas = (props: AreaSelectorProProps) => {
           editableMaxSize: editableMaxSize!,
           selectedIndex,
           shape,
-          onSelect
+          onSelect,
         }).on(onChange);
         if (mode === 'edit') {
           proxy.current = new EditorProxy();
@@ -107,4 +109,4 @@ export const useCanvas = (props: AreaSelectorProProps) => {
   }, [selectedIndex]);
 
   return { ref };
-};
+}

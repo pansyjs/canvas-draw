@@ -1,4 +1,5 @@
-import { Options } from '../types';
+import type { Options } from '../types';
+
 export interface IShapeData<T = any> {
   type: string;
   data: T;
@@ -29,26 +30,28 @@ export abstract class Shape<T = any> {
   constructor(
     shape: IShapeData<T>,
     ctx: CanvasRenderingContext2D,
-    options: IShapeOptions = { scaleX: 1, scaleY: 1 }
+    options: IShapeOptions = { scaleX: 1, scaleY: 1 },
   ) {
     this._type = shape?.type;
     this._data = shape?.data;
     this.options = options;
     this.ctx = ctx;
   }
+
   get type() {
     return this._type;
   }
+
   get data() {
     return this._data;
   }
-  //绘制正常状态的图形，用于展示
+  // 绘制正常状态的图形，用于展示
   abstract draw(style?: ShapeStyle): void;
-  //绘制激活状态，用于展示选中状态
+  // 绘制激活状态，用于展示选中状态
   abstract drawActive(activeKeyPoint?: number): void;
-  //绘制进行中的图形，用于展示正在绘制
+  // 绘制进行中的图形，用于展示正在绘制
   abstract drawWip(): void;
-  //这里主要是为了兼容老数据才这样设计
+  // 这里主要是为了兼容老数据才这样设计
   abstract toJson(): IShapeData;
   abstract transform(): Shape;
   abstract recover(): T;
@@ -58,7 +61,7 @@ export abstract class ReactiveShape<T> extends Shape<T> {
   constructor(
     shape: IShapeData<T>,
     ctx: CanvasRenderingContext2D,
-    options: IShapeOptions = { scaleX: 1, scaleY: 1 }
+    options: IShapeOptions = { scaleX: 1, scaleY: 1 },
   ) {
     super(shape, ctx, options);
     // const data = this.transform(shape.data);
@@ -69,7 +72,7 @@ export abstract class ReactiveShape<T> extends Shape<T> {
     const data = this.recover();
     return {
       type: this.type,
-      data: { ...data }
+      data: { ...data },
     };
   }
 }

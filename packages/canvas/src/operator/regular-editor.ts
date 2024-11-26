@@ -1,18 +1,20 @@
+import type { IShapeData, Point, Rect, Regular } from '../shapes';
+import type { OperatorOptions } from '../types';
+import type { OperatorState } from './base';
 import { HitPointType } from '../measurer';
-import { Circle, IShapeData, isRect, Point, Rect, Rectangle, Regular } from '../shapes';
-import { OperatorOptions } from '../types';
-import { Operator, OperatorState } from './base';
+import { Circle, isRect, Rectangle } from '../shapes';
+import { Operator } from './base';
 import { State } from './polygon-editor';
 
 export class RegularEditor extends Operator {
   protected state: State = State.Idle;
-  protected resizeHandle: number = -1; //resize的句柄，保存的是缩放点的index
-  protected wipRect: Partial<Rect> = {}; //正在绘制的图形
+  protected resizeHandle: number = -1; // resize的句柄，保存的是缩放点的index
+  protected wipRect: Partial<Rect> = {}; // 正在绘制的图形
   constructor(
     canvas: HTMLCanvasElement,
     shapes: IShapeData[],
     state: OperatorState,
-    options: OperatorOptions
+    options: OperatorOptions,
   ) {
     super(canvas, shapes, state, options);
     if (this.options.mode === 'edit') {
@@ -21,7 +23,7 @@ export class RegularEditor extends Operator {
       canvas.addEventListener('mousemove', this._handleMouseMove, false);
       canvas.addEventListener('click', this._handleClick, false);
       canvas.addEventListener('dblclick', this._handleDblClick, false);
-      //监听del键
+      // 监听del键
       document.addEventListener('keydown', this._handleKeydown, false);
       canvas.addEventListener('mouseleave', this._handleMouseLeave, false);
     }
@@ -57,7 +59,8 @@ export class RegularEditor extends Operator {
           this.dispatch();
           this.select(-1);
         }
-      } else if (this.state === State.Drawing) {
+      }
+      else if (this.state === State.Drawing) {
         this.wipRect = {};
         this.select(-1);
       }
@@ -67,12 +70,13 @@ export class RegularEditor extends Operator {
   private _handleMousedown = this._createControlledListener((e: MouseEvent) => {
     const isRightClick = e.button === 2;
     if (isRightClick) {
-      //右键结束
+      // 右键结束
       if (this.state === State.Drawing) {
         this.state = State.Idle;
         this._complete();
       }
-    } else {
+    }
+    else {
       const selectShape = this.shapes?.[this.activeShapeIndex];
       const result = this.measurer.isPointInShapeKey({ x: e.layerX, y: e.layerY }, selectShape);
       if (result) {
@@ -85,9 +89,9 @@ export class RegularEditor extends Operator {
     }
   });
 
-  private _handleMouseup = this._createControlledListener((e: MouseEvent) => {
+  private _handleMouseup = this._createControlledListener(() => {
     if (this.state === State.Resize) {
-      //这个状态重置放到click事件里面去处理，不然会导致体验问题
+      // 这个状态重置放到click事件里面去处理，不然会导致体验问题
       // this.state = State.Editing;
       this.dispatch();
     }
@@ -102,28 +106,31 @@ export class RegularEditor extends Operator {
             x: p.x,
             y: p.y,
             width: points[2].x - p.x,
-            height: points[2].y - p.y
+            height: points[2].y - p.y,
           };
-        } else if (handle === 1) {
+        }
+        else if (handle === 1) {
           shape.data.rect = {
             x: points[0].x,
             y: p.y,
             width: p.x - points[0].x,
-            height: points[2].y - p.y
+            height: points[2].y - p.y,
           };
-        } else if (handle === 2) {
+        }
+        else if (handle === 2) {
           shape.data.rect = {
             x: points[0].x,
             y: points[0].y,
             width: p.x - points[0].x,
-            height: p.y - points[0].y
+            height: p.y - points[0].y,
           };
-        } else if (handle === 3) {
+        }
+        else if (handle === 3) {
           shape.data.rect = {
             x: p.x,
             y: points[0].y,
             width: points[2].x - p.x,
-            height: p.y - points[0].y
+            height: p.y - points[0].y,
           };
         }
       }
@@ -146,26 +153,30 @@ export class RegularEditor extends Operator {
           }
         }
       }
-    } else if (this.state === State.Idle) {
+    }
+    else if (this.state === State.Idle) {
       const hits = this.measurer.isPointInPath({ x: e.layerX, y: e.layerY }, this.shapes);
       if (this.shapes.length < this.options.editableMaxSize && hits.length === 0) {
         this.pen.drawTooltip(e.layerX, e.layerY, '单击绘制起点');
         this.canvas.style.cursor = 'crosshair';
-      } else {
+      }
+      else {
         if (hits.length > 0) {
           this.canvas.style.cursor = 'pointer';
           this.pen.drawTooltip(e.layerX, e.layerY, '单击面可选中并编辑，删除');
         }
       }
-    } else if (this.state === State.Resize) {
+    }
+    else if (this.state === State.Resize) {
       const selectShape = this.shapes?.[this.activeShapeIndex];
       if (selectShape && this.resizeHandle !== -1) {
-        //this.resizeHandle代表着当前正在调整的顶点，根据顶点位置计算新的矩形
+        // this.resizeHandle代表着当前正在调整的顶点，根据顶点位置计算新的矩形
         this.resizeShape(selectShape, { x: e.layerX, y: e.layerY }, this.resizeHandle);
         this.pen.draw(this.shapes, this.activeShapeIndex);
         this.canvas.style.cursor = 'move';
       }
-    } else if (this.state === State.Editing) {
+    }
+    else if (this.state === State.Editing) {
       const selectShape = this.shapes?.[this.activeShapeIndex];
       if (selectShape) {
         this.pen.draw(this.shapes, this.activeShapeIndex);
@@ -178,9 +189,10 @@ export class RegularEditor extends Operator {
             e.layerY,
             `拖拽节点调整位置${
               selectShape?.data?.points?.length > this.options?.minPoint ? '，右键删除' : ''
-            }`
+            }`,
           );
-        } else {
+        }
+        else {
           this.canvas.style.cursor = 'default';
         }
       }
@@ -189,38 +201,41 @@ export class RegularEditor extends Operator {
 
   private _handleClick = this._createControlledListener((e: MouseEvent) => {
     if (this.pen) {
-      //平移和缩放以及绘制时，暂时忽略点击事件
+      // 平移和缩放以及绘制时，暂时忽略点击事件
       if (this.state !== State.Resize && this.state !== State.Pan && this.state !== State.Drawing) {
         const hits = this.measurer.isPointInPath({ x: e.layerX, y: e.layerY }, this.shapes);
-        //如果点击了某个图形，则选中该图形
+        // 如果点击了某个图形，则选中该图形
         if (hits.length > 0) {
           if (this.state === State.Idle || this.state === State.Editing) {
             this.select(hits[0]);
           }
-        } else {
+        }
+        else {
           if (this.state === State.Idle && this.shapes.length < this.options.editableMaxSize) {
             this.wipRect = {
               x: e.layerX,
               y: e.layerY,
               width: 0,
-              height: 0
+              height: 0,
             };
             this.pen.draw(this.shapes, -1, this._createShape(this.wipRect as Rect)!);
             this.canvas.style.cursor = 'crosshair';
             this.pen.drawTooltip(e.layerX, e.layerY, '双击或右键结束');
             this.state = State.Drawing;
-          } else if (this.state === State.Editing) {
+          }
+          else if (this.state === State.Editing) {
             this.select(-1);
             this.state = State.Idle;
           }
         }
-      } else if (this.state === State.Resize) {
+      }
+      else if (this.state === State.Resize) {
         this.state = State.Editing;
       }
     }
   });
 
-  private _handleDblClick = this._createControlledListener((e: MouseEvent) => {
+  private _handleDblClick = this._createControlledListener(() => {
     if (this.state === State.Drawing) {
       this._complete();
     }
@@ -244,15 +259,17 @@ export class RegularEditor extends Operator {
       return Rectangle.create(rect, this.pen.ctx, {
         ...this.options,
         scaleX: this.pen.scaleX,
-        scaleY: this.pen.scaleY
+        scaleY: this.pen.scaleY,
       });
-    } else if (shape === 'circle') {
+    }
+    else if (shape === 'circle') {
       return Circle.create(rect, this.pen.ctx, {
         ...this.options,
         scaleX: this.pen.scaleX,
-        scaleY: this.pen.scaleY
+        scaleY: this.pen.scaleY,
       });
-    } else {
+    }
+    else {
       return null;
     }
   };

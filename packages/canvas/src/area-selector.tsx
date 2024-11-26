@@ -1,8 +1,8 @@
+import type { AreaSelectorProProps } from './types';
 import * as React from 'react';
-import { AreaSelectorProProps } from './types';
 import { useCanvas } from './use-canvas';
 
-export const AreaSelectorPro = (props: AreaSelectorProProps) => {
+export function AreaSelectorPro(props: AreaSelectorProProps) {
   const { className, style, width, height, children } = props;
 
   const containerRef = React.useRef(null);
@@ -16,16 +16,15 @@ export const AreaSelectorPro = (props: AreaSelectorProProps) => {
         ...style,
         position: 'relative',
         width: `${width}px`,
-        height: `${height}px`
+        height: `${height}px`,
       }}
     >
-      {<canvas width={width} height={height} ref={ref} />}
+      <canvas width={width} height={height} ref={ref} />
       {React.Children.map(children, (child: any) =>
-        React.cloneElement(child, { style: { position: 'absolute' } })
-      )}
+        React.cloneElement(child, { style: { position: 'absolute' } }))}
     </div>
   );
-};
+}
 
 AreaSelectorPro.defaultProps = {
   editableMaxSize: 1,
@@ -34,6 +33,6 @@ AreaSelectorPro.defaultProps = {
   mode: 'default',
   axis: {
     width: 1920,
-    height: 1080
-  }
+    height: 1080,
+  },
 };

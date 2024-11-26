@@ -1,4 +1,5 @@
-import { Operator, operatorsMap } from './operator';
+import type { Operator } from './operator';
+import { operatorsMap } from './operator';
 
 type Keys = keyof typeof operatorsMap;
 
@@ -15,8 +16,8 @@ export class EditorProxy {
           new OperatorClass(this.operator?.canvas, [], this.operator?.operatorState, {
             ...this.operator?.options,
             subOperator: true,
-            shape: k
-          })
+            shape: k,
+          }),
         );
       }
     });
@@ -27,6 +28,7 @@ export class EditorProxy {
       }
     });
   }
+
   destroy() {
     if (this.operator) {
       this.operator.destroy();

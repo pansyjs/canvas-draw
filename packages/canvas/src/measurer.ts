@@ -1,11 +1,12 @@
-import { Pen } from './pen';
-import { IShapeData, Point, ShapeFactory } from './shapes';
-import { Options } from './types';
+import type { Pen } from './pen';
+import type { IShapeData, Point } from './shapes';
+import type { Options } from './types';
+import { ShapeFactory } from './shapes';
 
 export enum HitPointType {
   None = -1,
   KeyPoint = 1,
-  CenterPoint = 2
+  CenterPoint = 2,
 }
 
 export class Measurer {
@@ -26,32 +27,32 @@ export class Measurer {
   public isPointInShapeKey(
     point: Point,
     shape: IShapeData,
-    wipShape?: boolean
+    wipShape?: boolean,
   ): [HitPointType, number] {
     // const points = shape?.data?.points;
     const points = this.getShapeKeyPoints(shape);
     if (points?.length < 3 && !wipShape) {
       return [-1, -1];
     }
-    //半径稍微大一点
-    const r = this.options?.shapeStyle?.circleRadius! + 1;
+    // 半径稍微大一点
+    const r = (this.options?.shapeStyle?.circleRadius || 0) + 1;
     for (let i = 0; i < points.length; ++i) {
       const p = points[i];
-      //盘点point是否在以r为半径，p为圆心的圆内
+      // 盘点point是否在以r为半径，p为圆心的圆内
       if (
-        Math.pow(Math.abs(point.x - p.x), 2) + Math.pow(Math.abs(point.y - p.y), 2) <=
-        Math.pow(r, 2)
+        Math.abs(point.x - p.x) ** 2 + Math.abs(point.y - p.y) ** 2
+        <= r ** 2
       ) {
         return [1, i];
       }
       const nextPoint = points?.[(i + 1) % points.length];
       const center = {
         x: (p.x + nextPoint.x) * 0.5,
-        y: (p.y + nextPoint.y) * 0.5
+        y: (p.y + nextPoint.y) * 0.5,
       };
       if (
-        Math.pow(Math.abs(point.x - center.x), 2) + Math.pow(Math.abs(point.y - center.y), 2) <=
-        Math.pow(r, 2)
+        Math.abs(point.x - center.x) ** 2 + Math.abs(point.y - center.y) ** 2
+        <= r ** 2
       ) {
         return [2, i];
       }
@@ -63,7 +64,7 @@ export class Measurer {
     this.pen.ctx.clearRect(0, 0, this.pen.width, this.pen.height);
     return shapes?.reduce<number[]>((prev, s, idx) => {
       this.pen.drawShape(
-        ShapeFactory.createShape(s, this.pen.ctx, { ...this.options, scaleX: 1, scaleY: 1 })
+        ShapeFactory.createShape(s, this.pen.ctx, { ...this.options, scaleX: 1, scaleY: 1 }),
       );
       const canvasPoint = this.pen.physicalToCanvas(point);
       const isInPath = this.pen.ctx.isPointInPath(canvasPoint.x, canvasPoint.y);
@@ -73,12 +74,13 @@ export class Measurer {
       return prev;
     }, []);
   }
+
   /*
         @returns [图形索引, 关键点类型, 关键点索引]
     */
   public isPointInKeyPath(
     point: Point,
-    shapes: IShapeData[]
+    shapes: IShapeData[],
   ): false | [number, HitPointType, number] {
     for (let i = 0; i < shapes.length; ++i) {
       const shape = shapes[i];
@@ -102,20 +104,22 @@ export class Measurer {
         { x: rect?.x, y: rect?.y },
         { x: rect?.x + rect?.width, y: rect?.y },
         { x: rect?.x + rect?.width, y: rect?.y + rect?.height },
-        { x: rect?.x, y: rect?.y + rect?.height }
+        { x: rect?.x, y: rect?.y + rect?.height },
       ];
-    } else if (shape?.type === 'circle') {
+    }
+    else if (shape?.type === 'circle') {
       const rect = shape?.data?.rect;
       return [
         {
           x: rect?.x + rect?.width * 0.5,
-          y: rect?.y
+          y: rect?.y,
         },
         { x: rect?.x + rect?.width, y: rect?.y + rect?.height * 0.5 },
         { x: rect?.x + rect?.width * 0.5, y: rect?.y + rect?.height },
-        { x: rect?.x, y: rect?.y + rect?.height * 0.5 }
+        { x: rect?.x, y: rect?.y + rect?.height * 0.5 },
       ];
-    } else {
+    }
+    else {
       return shape?.data?.points || [];
     }
   }
