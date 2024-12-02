@@ -1,8 +1,8 @@
 ---
 hero:
-  title: Material
-  description: Sensoro React 组件&物料库
+  title: Darw
+  description: 绘制组件
   actions:
-    - text: 组件
-      link: /components/battery
+    - text: 🏮🏮 快速开始 →
+      link: /docs
 ---

@@ -113,6 +113,9 @@ importers:
       '@eslint-react/eslint-plugin':
         specifier: 'catalog:'
         version: 1.17.2(eslint@9.15.0(jiti@1.21.6))(typescript@5.4.5)
+      '@pansy/darw-canvas-react':
+        specifier: workspace:*
+        version: link:packages/canvas
       '@rollup/plugin-commonjs':
         specifier: 'catalog:'
         version: 28.0.1(rollup@4.28.0)

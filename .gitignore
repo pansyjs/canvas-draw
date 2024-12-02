@@ -16,4 +16,7 @@ lib
 .unlighthouse
 .eslintcache
 
+website/.dumi/tmp
+website/.dumi/tmp-production
+
 *storybook.log
