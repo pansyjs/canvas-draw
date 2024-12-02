@@ -33,16 +33,23 @@
     "eslint-plugin-react-refresh": "catalog:",
     "fast-glob": "catalog:",
     "father": "catalog:",
-    "ora": "^8.1.1",
+    "lint-staged": "catalog:",
+    "ora": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-dts": "catalog:",
     "rollup-plugin-esbuild": "catalog:",
+    "simple-git-hooks": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:",
     "walrus": "workspace:*",
     "zx": "catalog:"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --cache --fix"
+    ]
   }
 }
