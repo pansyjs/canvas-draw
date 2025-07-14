@@ -1,10 +1,10 @@
 /* eslint-disable react/no-clone-element */
 /* eslint-disable react/no-children-map */
-import type { DrawProps } from './types';
+import type { CanvasDrawProps } from './types';
 import React from 'react';
 import { useDraw } from './useDraw';
 
-const defaultProps: Partial<DrawProps> = {
+const defaultProps: Partial<CanvasDrawProps> = {
   editableMaxSize: 1,
   minPoint: 3,
   maxPoint: 10,
@@ -15,7 +15,7 @@ const defaultProps: Partial<DrawProps> = {
   },
 };
 
-export function Draw(props: DrawProps) {
+export function CanvasDraw(props: CanvasDrawProps) {
   const mergedProps = { ...defaultProps, ...props };
   const { className, style, width, height, children } = mergedProps;
 

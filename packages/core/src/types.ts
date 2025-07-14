@@ -20,7 +20,6 @@ export interface EditorOptions {
 export type Mode = 'edit' | 'select' | 'default';
 
 export interface Options {
-  // editor?: boolean;
   mode?: Mode;
   minPoint?: number;
   maxPoint?: number;
@@ -28,10 +27,7 @@ export interface Options {
   height?: number;
   shapeStyle?: ShapeStyle;
   activeShapeStyle?: ShapeStyle;
-  // labelStyle?: LabelStyle;
   editableMaxSize?: number;
-  // disablePolygon?: boolean;
-  // textAline?: 'default' | 'center';
   axis?: {
     width: number;
     height: number;

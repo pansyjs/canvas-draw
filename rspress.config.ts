@@ -5,10 +5,10 @@ import { defineConfig } from 'rspress/config';
 export default defineConfig({
   base: '/draw/',
   root: path.join(__dirname, 'docs'),
-  title: 'Draw',
+  title: 'CanvasDraw',
   icon: '/logo.png',
   logo: '/logo.png',
-  logoText: 'Draw',
+  logoText: 'CanvasDraw',
   markdown: {
     checkDeadLinks: true,
   },

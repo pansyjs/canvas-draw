@@ -1,4 +1,4 @@
-import { Draw } from '@canvas-draw/react';
+import { CanvasDraw } from '@canvas-draw/react';
 import { Button } from 'antd';
 import React from 'react';
 
@@ -20,7 +20,7 @@ function Example() {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      <Draw
+      <CanvasDraw
         width={750}
         height={420}
         style={{ background: 'rgba(17, 30, 54, 0.25)' }}

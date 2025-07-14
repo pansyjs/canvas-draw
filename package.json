@@ -1,5 +1,4 @@
 {
-  "name": "@pansy/source",
   "private": true,
   "packageManager": "pnpm@10.12.4",
   "engines": {

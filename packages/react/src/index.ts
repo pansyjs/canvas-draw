@@ -1,5 +1,5 @@
-import { Draw } from './draw';
+import { CanvasDraw } from './draw';
 
-export type { DrawProps } from './types';
-export { Draw };
-export default Draw;
+export type { CanvasDrawProps } from './types';
+export { CanvasDraw };
+export default CanvasDraw;

@@ -2,7 +2,7 @@
 pageType: home
 
 hero:
-  name: Darw
+  name: Canvas Draw
   text: 灵活好用的绘制组件
   actions:
     - theme: brand
