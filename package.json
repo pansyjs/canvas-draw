@@ -28,7 +28,6 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "antd": "catalog:",
     "eslint": "catalog:",
     "eslint-plugin-react-hooks": "catalog:",
     "eslint-plugin-react-refresh": "catalog:",
@@ -37,6 +36,7 @@
     "react-dom": "catalog:",
     "rspress": "catalog:",
     "simple-git-hooks": "catalog:",
+    "tdesign-react": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"

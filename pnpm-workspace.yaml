@@ -15,7 +15,6 @@ catalog:
   '@types/node': ^24.0.12
   '@types/react': ^18.3.12
   '@types/react-dom': ^18.3.1
-  antd: ^5.26.4
   eslint: ^9.30.1
   eslint-plugin-react-hooks: ^5.2.0
   eslint-plugin-react-refresh: ^0.4.20
@@ -24,7 +23,7 @@ catalog:
   react-dom: ^18.3.1
   rspress: ^1.44.0
   simple-git-hooks: ^2.13.0
+  tdesign-react: ^1.13.1
   typescript: ~5.8.3
   vite: ^7.0.4
   vitest: ^3.2.4
-  zx: ^8.2.4
