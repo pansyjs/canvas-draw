@@ -1,10 +1,10 @@
 {
-  "name": "root",
+  "name": "@pansy/source",
   "private": true,
-  "packageManager": "pnpm@9.14.3",
-  "license": "ISC",
+  "packageManager": "pnpm@10.12.4",
   "engines": {
-    "node": "^18.0.0 || >=20.0.0"
+    "node": ">=22.13.1",
+    "pnpm": ">=10.12.1"
   },
   "scripts": {
     "start": "pnpm --filter website start",
@@ -18,39 +18,34 @@
     "@antfu/eslint-config": "catalog:",
     "@commitlint/cli": "catalog:",
     "@commitlint/config-conventional": "catalog:",
+    "@commitlint/types": "catalog:",
     "@eslint-react/eslint-plugin": "catalog:",
-    "@pansy/darw-canvas-react": "workspace:*",
-    "@rollup/plugin-commonjs": "catalog:",
-    "@rollup/plugin-node-resolve": "catalog:",
+    "@rsbuild/plugin-react": "catalog:",
+    "@rslib/core": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "chalk": "catalog:",
-    "cross-spawn": "catalog:",
-    "dumi": "catalog:",
+    "eslint": "catalog:",
     "eslint-plugin-react-hooks": "catalog:",
     "eslint-plugin-react-refresh": "catalog:",
-    "fast-glob": "catalog:",
-    "father": "catalog:",
     "lint-staged": "catalog:",
-    "ora": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "rollup": "catalog:",
-    "rollup-plugin-dts": "catalog:",
-    "rollup-plugin-esbuild": "catalog:",
     "simple-git-hooks": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vitest": "catalog:",
-    "walrus": "workspace:*",
-    "zx": "catalog:"
+    "vitest": "catalog:"
+  },
+  "simple-git-hooks": {
+    "commit-msg": "npx --no -- commitlint --edit $1",
+    "pre-commit": "npx lint-staged",
+    "preserveUnused": [
+      "commit-msg"
+    ]
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --cache --fix"
-    ]
+    "*": "eslint --fix"
   }
 }
