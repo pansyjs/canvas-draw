@@ -15,11 +15,12 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
+    "@canvas-draw/core": "workspace:*",
+    "@canvas-draw/react": "workspace:*",
     "@commitlint/cli": "catalog:",
     "@commitlint/config-conventional": "catalog:",
     "@commitlint/types": "catalog:",
     "@eslint-react/eslint-plugin": "catalog:",
-    "@pansy/react-darw": "workspace:*",
     "@rsbuild/plugin-react": "catalog:",
     "@rslib/core": "catalog:",
     "@rspress/plugin-preview": "catalog:",

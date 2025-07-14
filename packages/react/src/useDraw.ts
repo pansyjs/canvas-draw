@@ -1,8 +1,6 @@
 import type { DrawProps } from './types';
+import { EditorProxy, Operator, operatorsMap, OperatorState, Selecter } from '@canvas-draw/core';
 import React from 'react';
-import { EditorProxy } from './core/editor-proxy';
-import { Operator, operatorsMap, Selecter } from './core/operator';
-import { OperatorState } from './core/operator/base';
 
 const defaultShapeStyle = {
   fillStyle: 'rgba(255, 77, 82, 0.15)',

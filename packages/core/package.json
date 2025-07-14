@@ -1,9 +1,11 @@
 {
-  "name": "@pansy/react-darw",
+  "name": "@canvas-draw/core",
   "version": "1.0.0",
-  "description": "绘制组件",
+  "description": "一个基于原生 js 的绘制插件",
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "绘制"
+  ],
   "sideEffects": false,
   "main": "src/index.ts",
   "files": [
@@ -13,21 +15,6 @@
     "build": "rslib build",
     "dev": "rslib build --watch"
   },
-  "peerDependencies": {
-    "@types/react": "*",
-    "@types/react-dom": "*",
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
-  },
-  "peerDependenciesMeta": {
-    "@types/react": {
-      "optional": true
-    },
-    "@types/react-dom": {
-      "optional": true
-    }
-  },
-  "dependencies": {},
   "publishConfig": {
     "access": "public",
     "main": "dist/index.js",

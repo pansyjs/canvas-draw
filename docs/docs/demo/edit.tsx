@@ -1,4 +1,4 @@
-import { Draw } from '@pansy/react-darw';
+import { Draw } from '@canvas-draw/react';
 import { Button } from 'antd';
 import React from 'react';
 

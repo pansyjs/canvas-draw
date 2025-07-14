@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "jsx": "react",
+    "lib": ["DOM", "ESNext"],
+    "baseUrl": "./",
+    "rootDir": "./src",
+    "types": ["node"],
+    "outDir": "./esm",
+    "ignoreDeprecations": "5.0"
+  },
+  "include": ["src"]
+}
