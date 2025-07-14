@@ -13,6 +13,10 @@ export default defineConfig({
       dts: true,
       format: 'esm',
     },
+    {
+      bundle: false,
+      format: 'cjs',
+    },
   ],
   output: {
     target: 'web',

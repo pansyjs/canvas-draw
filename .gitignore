@@ -16,7 +16,7 @@ lib
 .unlighthouse
 .eslintcache
 
-website/.dumi/tmp
-website/.dumi/tmp-production
+doc_build
 
 *storybook.log
+tsconfig.tsbuildinfo

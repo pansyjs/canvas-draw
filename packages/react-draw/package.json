@@ -2,15 +2,16 @@
   "name": "@pansy/react-darw",
   "version": "1.0.0",
   "description": "绘制组件",
-  "license": "ISC",
+  "license": "MIT",
   "keywords": [],
+  "sideEffects": false,
   "main": "src/index.ts",
   "files": [
     "dist"
   ],
-
   "scripts": {
-    "build": "rollup --config"
+    "build": "rslib build",
+    "dev": "rslib build --watch"
   },
   "peerDependencies": {
     "@types/react": "*",
@@ -29,8 +30,21 @@
   "dependencies": {},
   "publishConfig": {
     "access": "public",
-    "main": "dist/cjs/index.js",
-    "module": "dist/esm/index.mjs",
-    "types": "dist/esm/index.d.ts"
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
+    "exports": {
+      ".": {
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.mjs"
+        },
+        "require": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        }
+      },
+      "./package.json": "./package.json"
+    }
   }
 }
