@@ -1,6 +1,7 @@
 import { CanvasDraw } from '@canvas-draw/react';
 import React from 'react';
 import { Image as TImage } from 'tdesign-react';
+import 'tdesign-react/es/style/index.css';
 import './index.css';
 
 interface ImageDrawProps {
