@@ -1,4 +1,4 @@
-import type { DrawProps } from './types';
+import type { CanvasDrawProps } from './types';
 import { EditorProxy, Operator, operatorsMap, OperatorState, Selecter } from '@canvas-draw/core';
 import React from 'react';
 
@@ -24,7 +24,7 @@ const defaultActiveShapeStyle = {
   circleRadius: 5,
 };
 
-export function useDraw(props: DrawProps) {
+export function useDraw(props: CanvasDrawProps) {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const editor = props?.mode === 'edit';
   const shapeStyle = { ...(editor ? defaultShapeStyle : defaultShapeStyle2), ...props.shapeStyle };
