@@ -1,22 +1,22 @@
-import { CanvasDraw } from '@canvas-draw/react';
 import React from 'react';
 import { Image as TImage } from 'tdesign-react';
 import 'tdesign-react/es/style/index.css';
 import './index.css';
-
-interface ImageDrawProps {
-  src: string;
-  height?: number;
-}
 
 interface AreaSize {
   width: number;
   height: number;
 }
 
+interface ImageDrawProps {
+  src: string;
+  height?: number;
+  children?: (imageSize: AreaSize, drawAreaSize: AreaSize) => React.ReactElement;
+}
+
 export function ImageDraw(props: ImageDrawProps) {
   const rootRef = React.useRef<HTMLDivElement>(null);
-  const { src, height = 450 } = props;
+  const { src, height = 450, children } = props;
 
   const [axis, setAxis] = React.useState<AreaSize>();
   const [areaSize, setAreaSize] = React.useState<AreaSize>();
@@ -57,15 +57,7 @@ export function ImageDraw(props: ImageDrawProps) {
     <div ref={rootRef} className="image-draw">
       <TImage fit="contain" src={src} style={{ height }} />
       <div className="image-draw-content">
-        {axis && areaSize && (
-          <CanvasDraw
-            mode="edit"
-            shape="rectangle"
-            axis={axis}
-            width={areaSize.width}
-            height={areaSize.height}
-          />
-        )}
+        {axis && areaSize && children?.(axis, areaSize)}
       </div>
     </div>
   );
