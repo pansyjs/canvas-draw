@@ -3,7 +3,7 @@ import { pluginPreview } from '@rspress/plugin-preview';
 import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
-  base: '/draw/',
+  base: '/canvas-draw/',
   root: path.join(__dirname, 'docs'),
   title: 'Canvas Draw',
   icon: '/logo.png',
@@ -27,7 +27,7 @@ export default defineConfig({
       {
         icon: 'github',
         mode: 'link',
-        content: 'https://github.com/pansyjs/draw',
+        content: 'https://github.com/pansyjs/canvas-draw',
       },
     ],
   },

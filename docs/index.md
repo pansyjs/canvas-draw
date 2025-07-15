@@ -10,7 +10,7 @@ hero:
       link: /docs/start/introduction
     - theme: alt
       text: GitHub
-      link: https://github.com/pansyjs/draw
+      link: https://github.com/pansyjs/canvas-draw
   image:
     src: /logo.png
     alt: Logo
