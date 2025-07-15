@@ -34,8 +34,8 @@ export function CanvasDraw(props: CanvasDrawProps) {
       }}
     >
       <canvas width={width} height={height} ref={ref} />
-      {React.Children.map(children, (child: any) =>
-        React.cloneElement(child, { style: { position: 'absolute' } }))}
+      {React.Children.map(children, (child) =>
+        React.cloneElement(child as React.ReactElement, { style: { position: 'absolute' } }))}
     </div>
   );
 }

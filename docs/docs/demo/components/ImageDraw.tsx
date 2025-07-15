@@ -53,11 +53,18 @@ export function ImageDraw(props: ImageDrawProps) {
     };
   }, [src]);
 
+  const renderChildren = React.useMemo(() => {
+    if (!areaSize || !axis)
+      return null;
+
+    return children?.(axis, areaSize);
+  }, [axis, areaSize]);
+
   return (
     <div ref={rootRef} className="image-draw">
       <TImage fit="contain" src={src} style={{ height }} />
       <div className="image-draw-content">
-        {axis && areaSize && children?.(axis, areaSize)}
+        {renderChildren}
       </div>
     </div>
   );
