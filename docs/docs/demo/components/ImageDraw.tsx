@@ -70,3 +70,5 @@ export function ImageDraw(props: ImageDrawProps) {
     </div>
   );
 }
+
+export default ImageDraw;
